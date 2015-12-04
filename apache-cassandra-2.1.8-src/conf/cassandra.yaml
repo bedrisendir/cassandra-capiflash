@@ -227,16 +227,15 @@ counter_cache_save_period: 7200
 
 #CommitLog-CAPIFlashCommitLog
 #Type CommitLog or CAPIFlashCommitLog
-commitlog_type: CommitLog
+commitlog_type: CAPIFlashCommitLog
 #commitlog_type: CAPIFlashCommitLog
 
 #FlashCommitLog Settings
 capiflashlog_devices:
-    - /dev/sg7
-    - /dev/sg9
-    
+    - /mnt/ramdisk/dev1.txt
+
 #Start offset on physical LUN
-capiflashlog_start_offset: 30000000
+capiflashlog_start_offset: 0
 
 #Number of worker threads serializing and making synchronous calls to capi device
 capiflashlog_threads: 64
@@ -252,9 +251,6 @@ capiflashlog_threads_buffer_size_in_mb: 1
 
 #emergency valve for flushing old commitlog segments. Flashcommitlog triggers flush when there is less than 0.2 segments left on flash
 capiflashlog_emergency_valve: 0.2
-
-
-
 
 # commitlog_sync may be either "periodic" or "batch." 
 # 

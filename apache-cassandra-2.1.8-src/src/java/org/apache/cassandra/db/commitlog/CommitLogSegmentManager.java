@@ -473,7 +473,7 @@ public class CommitLogSegmentManager
      *
      * @return a Future that will finish when all the flushes are complete.
      */
-    private Future<?> flushDataFrom(List<CommitLogSegment> segments, boolean force)
+	private Future<?> flushDataFrom(List<CommitLogSegment> segments, boolean force)
     {
         if (segments.isEmpty())
             return Futures.immediateFuture(null);

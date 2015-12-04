@@ -20,7 +20,7 @@ package org.apache.cassandra.db.commitlog;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.Callable;
-import java.util.zip.Checksum;
+import org.apache.cassandra.utils.PureJavaCrc32;
 
 import org.apache.cassandra.db.Mutation;
 import org.apache.cassandra.io.util.DataOutputByteBuffer;
@@ -29,10 +29,11 @@ import org.apache.cassandra.utils.PureJavaCrc32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.research.capiblock.Chunk;
+import capiblocksim.Chunk;
+
 
 /**
- * @author bsendir
+ * @author bsendir1
  * Re-Usable Callable used for writing to flash. 
  */
 public class FlashWorker implements Callable {
@@ -41,7 +42,7 @@ public class FlashWorker implements Callable {
 	private final DataOutputByteBuffer bufferStream;
 	private Chunk ref = null;
 
-	private final Checksum checksum = new PureJavaCrc32();
+	private final PureJavaCrc32 checksum = new PureJavaCrc32();
 	private Mutation rm = null;
 	private FlashRecordKeeper info;
 	
@@ -58,9 +59,13 @@ public class FlashWorker implements Callable {
 			checksum.reset();
 			bufferStream.writeLong(info.getSegmentID());
 			bufferStream.writeInt(info.getTotalSize());
+			//update chsum
+			checksum.update(buffer, 0 , 12);
 			buffer.putLong(checksum.getValue());
 			Mutation.serializer.serialize(rm, bufferStream,
 					MessagingService.current_version);
+			//update chsum
+			checksum.update(buffer,12,buffer.position()-12);
 			buffer.putLong(checksum.getValue());
 			ref.writeBlock(info.getStartBlock(), info.getRequiredBlocks(),
 					buffer);

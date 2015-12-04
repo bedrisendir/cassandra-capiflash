@@ -1,7 +1,2 @@
 - No archiving support
-- No support for cassandra drain
 - Recovery not tested
-- Cassandra implements oporder and barriers for this version. Need to double check if synchronization is correct.
-- Hard coded parameters and Commitlog is not paramaterized. We can port it from 2.0
-- Recovery allocateDirects many buffers. I changed this in 2.0 code. We can port it from 2.0
-- Commitlog packege is not merged.

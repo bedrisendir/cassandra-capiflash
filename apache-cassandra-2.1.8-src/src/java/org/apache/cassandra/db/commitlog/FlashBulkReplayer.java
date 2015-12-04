@@ -50,8 +50,9 @@ import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import capiblocksim.Chunk;
+
 import com.google.common.collect.Ordering;
-import com.ibm.research.capiblock.Chunk;
 
 /**
  * @author bsendir
